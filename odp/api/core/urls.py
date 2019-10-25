@@ -1,7 +1,7 @@
 from django.urls import path
-from odp.api.core.views import Login
+from rest_framework.authtoken import views
 
 
 urlpatterns = [
-    path('obtain-token/', Login.as_view()),
+    path('obtain-token/', views.obtain_auth_token),
 ]
