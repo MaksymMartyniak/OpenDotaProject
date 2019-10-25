@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import Login
+from odp.api.core.views import Login
 
 
 urlpatterns = [
