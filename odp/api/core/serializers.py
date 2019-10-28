@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from odp.apps.core.models import Team
-from .wrappers import OpenDotaWrapper
+from .wrappers import OpenDotaClient
 
 
 class TeamSerializer(serializers.ModelSerializer):
@@ -16,21 +16,19 @@ class TeamCreateSerializer(serializers.ModelSerializer):
         fields = ('name',)
 
     def create(self, validated_data):
-        try:
-            name = validated_data.get('name')
-            team = OpenDotaWrapper()
-            team = team.get_team_by_name(name)
+        name = validated_data.get('name')
+        client = OpenDotaClient()
+        team_json = client.get_team_by_name(name)
+        if team_json is not None:
             team = Team.objects.create(
-                team_id=team['team_id'],
-                rating=team['rating'],
-                wins=team['wins'],
-                losses=team['losses'],
-                last_match_time=team['last_match_time'],
-                name=team['name'],
-                tag=team['tag'],
-                logo_url=team['logo_url'],
+                team_id=team_json['team_id'],
+                rating=team_json['rating'],
+                wins=team_json['wins'],
+                losses=team_json['losses'],
+                last_match_time=team_json['last_match_time'],
+                name=team_json['name'],
+                tag=team_json['tag'],
+                logo_url=team_json['logo_url'],
             )
-            team.save()
             return team
-        except:
-            raise serializers.ValidationError("Team with this name can't be found")
+        raise serializers.ValidationError("Team with this name can't be found")
