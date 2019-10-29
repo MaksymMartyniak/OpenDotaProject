@@ -18,7 +18,7 @@ class TeamCreateSerializer(serializers.ModelSerializer):
 class PlayerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Player
-        fields = ['team_id', 'email', 'phone_number', 'full_name',
+        fields = ['id', 'team_id', 'email', 'phone_number', 'full_name',
                   'open_dota_account_id', 'solo_competitive_rank', 'competitive_rank',
                   'rank_tier', 'leaderboard_rank', 'steamid', 'avatar', 'loccountrycode']
 

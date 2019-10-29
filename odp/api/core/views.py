@@ -3,7 +3,7 @@ from .serializers import TeamSerializer, TeamCreateSerializer, PlayerSerializer,
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
 from rest_framework.response import Response
-from odp.apps.core.models import Team
+from odp.apps.core.models import Team, Player
 from .wrappers import OpenDotaClient
 from rest_framework import status
 from rest_framework import serializers
@@ -28,9 +28,10 @@ class TeamViewSet(viewsets.ModelViewSet):
 
 
 class PlayerViewSet(viewsets.ModelViewSet):
+    queryset = Player.objects.all()
     permission_classes = (IsAuthenticated,)
     serializer_class = PlayerSerializer
-    lookup_url_kwarg = 'team_id'
+    lookup_url_kwarg = 'player_id'
 
     def create(self, request, *args, **kwargs):
         input_data = self.get_validated_input_data()
