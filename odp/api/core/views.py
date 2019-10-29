@@ -10,9 +10,9 @@ from rest_framework import serializers
 
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
-    lookup_field = 'team_id'
     permission_classes = (IsAuthenticated,)
     serializer_class = TeamSerializer
+    lookup_url_kwarg = 'team_id'
 
     def create(self, request, *args, **kwargs):
         serializer = TeamCreateSerializer(data=request.data)
