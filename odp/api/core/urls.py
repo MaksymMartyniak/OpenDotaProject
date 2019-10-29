@@ -6,4 +6,5 @@ from .views import TeamViewSet
 urlpatterns = [
     path('obtain-token/', views.obtain_auth_token),
     path('teams/', TeamViewSet.as_view({'get': 'list', 'post': 'create'})),
+    path('teams/<int:team_id>/', TeamViewSet.as_view({'get': 'retrieve'})),
 ]

@@ -12,6 +12,7 @@ class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
     permission_classes = (IsAuthenticated,)
     serializer_class = TeamSerializer
+    lookup_url_kwarg = 'team_id'
 
     def create(self, request, *args, **kwargs):
         serializer = TeamCreateSerializer(data=request.data)
