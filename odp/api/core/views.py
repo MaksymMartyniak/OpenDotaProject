@@ -10,6 +10,7 @@ from rest_framework import serializers
 
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
+    lookup_field = 'team_id'
     permission_classes = (IsAuthenticated,)
     serializer_class = TeamSerializer
 
