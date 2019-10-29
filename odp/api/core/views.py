@@ -1,4 +1,4 @@
-from .serializers import TeamSerializer
+from .serializers import TeamSerializer, TeamCreateSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
 from rest_framework.response import Response
@@ -14,9 +14,10 @@ class TeamViewSet(viewsets.ModelViewSet):
     serializer_class = TeamSerializer
 
     def create(self, request, *args, **kwargs):
-        name = request.data['name']
+        serializer = TeamCreateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
         client = OpenDotaClient()
-        team_json = client.get_team_by_name(name)
+        team_json = client.get_team_by_name(serializer.validated_data['name'])
         if team_json is not None:
             serializer = self.get_serializer(data=team_json)
             if serializer.is_valid():

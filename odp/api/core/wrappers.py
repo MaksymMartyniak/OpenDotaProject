@@ -10,8 +10,8 @@ class OpenDotaClient:
     def get_team_by_name(self, team_name):
         result = self.session.get(self.BASE_URL + 'teams/')
         if result.status_code == 200:
-            for dic in result.json():
-                if dic['name'] == team_name:
-                    return dic
+            for team_dict in result.json():
+                if team_dict['name'] == team_name:
+                    return team_dict
             return None
         raise result.raise_for_status()
