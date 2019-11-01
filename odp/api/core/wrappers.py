@@ -9,12 +9,12 @@ class OpenDotaClient:
 
     def get_team_by_name(self, team_name):
         result = self.session.get(self.BASE_URL + 'teams/')
-        if result.status_code == 200:
-            for team_dict in result.json():
-                if team_dict['name'] == team_name:
-                    return team_dict
-            return None
-        raise result.raise_for_status()
+        result.raise_for_status()
+
+        for team_dict in result.json():
+            if team_dict['name'] == team_name:
+                return team_dict
+        return None
 
     def get_player_by_account_id(self, account_id):
         result = self.session.get(self.BASE_URL + 'players/{}'.format(account_id))

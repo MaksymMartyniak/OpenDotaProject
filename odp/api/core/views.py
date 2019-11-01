@@ -23,6 +23,7 @@ class TeamViewSet(viewsets.ModelViewSet):
         if not team_json:
             raise serializers.ValidationError("Team with this name can't be found")
         serializer = self.get_serializer(data=team_json)
+        serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
